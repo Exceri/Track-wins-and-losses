@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TextfileEdit.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DefaultFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">choose txtfile</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

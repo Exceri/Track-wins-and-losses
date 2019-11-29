@@ -377,8 +377,9 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "DashboardForm";
             this.Text = "Edit score";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DashboardForm_FormClosed);
             this.Load += new System.EventHandler(this.DashboardForm_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DashboardForm_KeyDown);
+            //this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DashboardForm_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

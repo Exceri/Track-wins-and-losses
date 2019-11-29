@@ -8,17 +8,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace TextfileEdit
 {
     public partial class DashboardForm : Form
     {
+        [DllImport("user32.dll")]
+        private static extern IntPtr FindWindow(String sClassName, String sAppName);
+        
+
+        private IntPtr thisWindow;
+        private Hotkey hotkey;
+
         public int wins = 0;
         public int draws = 0;
         public int losses = 0;
         public int winPerc = 0;
         public int drawPerc = 0;
         public int lossPerc = 0;
+        public int winPercWDraw = 0;
 
         public string filePath;
 
@@ -31,7 +40,14 @@ namespace TextfileEdit
         {
             filePath = Properties.Settings.Default.DefaultFilePath;
             txtFilePath.Text = filePath;
+
+            //thisWindow = FindWindow(null, System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
+            thisWindow = FindWindow(null, "Edit score");
+            hotkey = new Hotkey(thisWindow);
+            hotkey.RegisterHotKeys();
+            
         }
+       
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -59,6 +75,7 @@ namespace TextfileEdit
             }
             wins = Convert.ToInt32(winsTxt.Text);
             UpdatePercentLabels();
+            
         }
 
         private void winBtn_Click(object sender, EventArgs e)
@@ -160,7 +177,7 @@ namespace TextfileEdit
                 if (draws == 0)
                     txt.Write("W-" + wins + "   " + winPerc + "%" + "\r\n" + "L-" + losses);
                 else
-                    txt.Write("W-" + wins + "   " + winPerc + "%" + "\r\n" + "D-" + draws + "\r\n" + "L-" + losses);
+                    txt.Write("W-" + wins + "   " + winPercWDraw + "%" + "\r\n" + "D-" + draws + "\r\n" + "L-" + losses);
                 txt.Close();
             }
             catch(DirectoryNotFoundException dirEx)
@@ -222,6 +239,7 @@ namespace TextfileEdit
                 winPerc = (int)(((double)wins / (wins + draws + losses)) * 100);
                 drawPerc = (int)(((double)draws / (wins + draws + losses)) * 100);
                 lossPerc = (int)(((double)losses / (wins + draws + losses)) * 100);
+                winPercWDraw = (int)(((double)losses / (wins + losses)) * 100);
             }
             
             //return winPerc;
@@ -267,14 +285,14 @@ namespace TextfileEdit
 
             SimpleSave();
         }
-
+        /*
         private void DashboardForm_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.KeyCode.ToString() == "NumPad0")
             {
                 ResetScores();
             }
-            if (e.KeyCode.ToString() == "NumPad1")
+            if (e.Control && e.KeyCode.ToString() == "A")
             {
                 wins = 1 + wins;
                 winsTxt.Text = wins.ToString();
@@ -295,6 +313,83 @@ namespace TextfileEdit
                 UpdatePercentLabels();
                 SimpleSave();
             }
+        }
+        */
+        private void DashboardForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            hotkey.UnRegisterHotKeys();
+        }
+
+        protected override void WndProc(ref Message keyPressed)
+        {
+            if( keyPressed.Msg == 0x0312 && keyPressed.WParam.ToInt32() == 1)
+            {
+                AddWin();
+            }
+            if( keyPressed.Msg == 0x0312 && keyPressed.WParam.ToInt32() == 2)
+            {
+                AddDraw();
+            }
+            if (keyPressed.Msg == 0x0312 && keyPressed.WParam.ToInt32() == 3)
+            {
+                AddLoss();
+            }
+
+            if (keyPressed.Msg == 0x0312 && keyPressed.WParam.ToInt32() == 4)
+            {
+                SubtracWin();
+            }
+            if (keyPressed.Msg == 0x0312 && keyPressed.WParam.ToInt32() == 5)
+            {
+                SubtracDraw();
+            }
+            if (keyPressed.Msg == 0x0312 && keyPressed.WParam.ToInt32() == 6)
+            {
+                SubtracLoss();
+            }
+            base.WndProc(ref keyPressed);
+        }
+        private void AddWin()
+        {
+            wins = 1 + wins;
+            winsTxt.Text = wins.ToString();
+            UpdatePercentLabels();
+            SimpleSave();
+        }
+        private void AddDraw()
+        {
+            draws = 1 + draws;
+            drawsTxt.Text = draws.ToString();
+            UpdatePercentLabels();
+            SimpleSave();
+        }
+        private void AddLoss()
+        {
+            losses = 1 + losses;
+            lossesTxt.Text = losses.ToString();
+            UpdatePercentLabels();
+            SimpleSave();
+        }
+        private void SubtracWin()
+        {
+            wins = wins - 1;
+            winsTxt.Text = wins.ToString();
+            UpdatePercentLabels();
+            SimpleSave();
+        }
+        private void SubtracDraw()
+        {
+            draws = draws - 1;
+            drawsTxt.Text = draws.ToString();
+            UpdatePercentLabels();
+            SimpleSave();
+        }
+        private void SubtracLoss()
+        {
+            losses = losses - 1;
+            lossesTxt.Text = losses.ToString();
+            UpdatePercentLabels();
+            SimpleSave();
         }
     }
 }

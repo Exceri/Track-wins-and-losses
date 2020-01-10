@@ -34,5 +34,29 @@ namespace TextfileEdit.Properties {
                 this["DefaultFilePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Choose txtfile")]
+        public string DefaultFilePathText {
+            get {
+                return ((string)(this["DefaultFilePathText"]));
+            }
+            set {
+                this["DefaultFilePathText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShowPercent {
+            get {
+                return ((bool)(this["ShowPercent"]));
+            }
+            set {
+                this["ShowPercent"] = value;
+            }
+        }
     }
 }

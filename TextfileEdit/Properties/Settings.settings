@@ -5,5 +5,11 @@
     <Setting Name="DefaultFilePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">choose txtfile</Value>
     </Setting>
+    <Setting Name="DefaultFilePathText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Choose txtfile</Value>
+    </Setting>
+    <Setting Name="ShowPercent" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -49,7 +49,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>66FB198D81AE62FD8BF7BFFFB5F24B5630828259</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>A7A183B53857C306AD000585990A50A258B3D532</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>TextfileEdit_TemporaryKey.pfx</ManifestKeyFile>

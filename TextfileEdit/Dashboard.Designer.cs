@@ -56,6 +56,9 @@
             this.minusDrawBtn = new System.Windows.Forms.Button();
             this.minusLossBtn = new System.Windows.Forms.Button();
             this.resetBtn = new System.Windows.Forms.Button();
+            this.txtFilePathTextBox = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.changeDefaultFileBoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,7 +68,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(312, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(567, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -73,22 +76,24 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
-            this.changeDefaultFileToolStripMenuItem});
+            this.changeDefaultFileToolStripMenuItem,
+            this.changeDefaultFileBoxToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.Click += new System.EventHandler(this.fileToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // changeDefaultFileToolStripMenuItem
             // 
             this.changeDefaultFileToolStripMenuItem.Name = "changeDefaultFileToolStripMenuItem";
-            this.changeDefaultFileToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.changeDefaultFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.changeDefaultFileToolStripMenuItem.Text = "Change default file";
             this.changeDefaultFileToolStripMenuItem.Click += new System.EventHandler(this.changeDefaultFileToolStripMenuItem_Click);
             // 
@@ -105,7 +110,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(16, 298);
+            this.button1.Location = new System.Drawing.Point(16, 241);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
@@ -214,10 +219,11 @@
             this.textBox1.TabIndex = 14;
             this.textBox1.TabStop = false;
             this.textBox1.Text = "OMG";
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // btnWrite
             // 
-            this.btnWrite.Location = new System.Drawing.Point(340, 210);
+            this.btnWrite.Location = new System.Drawing.Point(340, 36);
             this.btnWrite.Name = "btnWrite";
             this.btnWrite.Size = new System.Drawing.Size(75, 23);
             this.btnWrite.TabIndex = 15;
@@ -227,7 +233,7 @@
             // 
             // btnRead
             // 
-            this.btnRead.Location = new System.Drawing.Point(443, 210);
+            this.btnRead.Location = new System.Drawing.Point(443, 191);
             this.btnRead.Name = "btnRead";
             this.btnRead.Size = new System.Drawing.Size(75, 23);
             this.btnRead.TabIndex = 16;
@@ -237,7 +243,7 @@
             // 
             // btnSaveSimple
             // 
-            this.btnSaveSimple.Location = new System.Drawing.Point(340, 38);
+            this.btnSaveSimple.Location = new System.Drawing.Point(340, 191);
             this.btnSaveSimple.Name = "btnSaveSimple";
             this.btnSaveSimple.Size = new System.Drawing.Size(75, 23);
             this.btnSaveSimple.TabIndex = 17;
@@ -343,12 +349,41 @@
             this.resetBtn.UseVisualStyleBackColor = true;
             this.resetBtn.Click += new System.EventHandler(this.resetBtn_Click);
             // 
+            // txtFilePathTextBox
+            // 
+            this.txtFilePathTextBox.Location = new System.Drawing.Point(340, 230);
+            this.txtFilePathTextBox.Name = "txtFilePathTextBox";
+            this.txtFilePathTextBox.Size = new System.Drawing.Size(178, 20);
+            this.txtFilePathTextBox.TabIndex = 27;
+            this.txtFilePathTextBox.Text = "Choose txtfile";
+            this.txtFilePathTextBox.TextChanged += new System.EventHandler(this.txtFilePathTextBox_TextChanged);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(246, 144);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(64, 17);
+            this.checkBox1.TabIndex = 28;
+            this.checkBox1.Text = "Show %";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // changeDefaultFileBoxToolStripMenuItem
+            // 
+            this.changeDefaultFileBoxToolStripMenuItem.Name = "changeDefaultFileBoxToolStripMenuItem";
+            this.changeDefaultFileBoxToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.changeDefaultFileBoxToolStripMenuItem.Text = "Change default file box";
+            this.changeDefaultFileBoxToolStripMenuItem.Click += new System.EventHandler(this.changeDefaultFileBoxToolStripMenuItem_Click);
+            // 
             // DashboardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(312, 258);
+            this.ClientSize = new System.Drawing.Size(567, 325);
+            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.txtFilePathTextBox);
             this.Controls.Add(this.resetBtn);
             this.Controls.Add(this.minusLossBtn);
             this.Controls.Add(this.minusDrawBtn);
@@ -379,7 +414,6 @@
             this.Text = "Edit score";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DashboardForm_FormClosed);
             this.Load += new System.EventHandler(this.DashboardForm_Load);
-            //this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DashboardForm_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -417,6 +451,9 @@
         private System.Windows.Forms.Button minusDrawBtn;
         private System.Windows.Forms.Button minusLossBtn;
         private System.Windows.Forms.Button resetBtn;
+        private System.Windows.Forms.TextBox txtFilePathTextBox;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.ToolStripMenuItem changeDefaultFileBoxToolStripMenuItem;
     }
 }
 

@@ -30,7 +30,9 @@ namespace TextfileEdit
         public int winPercWDraw = 0;
 
         public string filePath;
+        public string filePathText;
 
+        public bool showPerc;
         public DashboardForm()
         {
             InitializeComponent();
@@ -40,6 +42,12 @@ namespace TextfileEdit
         {
             filePath = Properties.Settings.Default.DefaultFilePath;
             txtFilePath.Text = filePath;
+
+            filePathText = Properties.Settings.Default.DefaultFilePathText;
+            txtFilePathTextBox.Text = filePathText;
+
+            showPerc = Properties.Settings.Default.ShowPercent;
+            checkBox1.Checked = showPerc;
 
             //thisWindow = FindWindow(null, System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
             thisWindow = FindWindow(null, "Edit score");
@@ -157,6 +165,8 @@ namespace TextfileEdit
                 {
                     using (StreamReader sr = new StreamReader(ofd.FileName))
                     {
+                        txtFilePathTextBox.Text = ofd.FileName;
+                        filePathText = ofd.FileName;
                         textBox1.Text = await sr.ReadToEndAsync();
                     }
                 }
@@ -165,20 +175,40 @@ namespace TextfileEdit
 
         private void btnSaveSimple_Click(object sender, EventArgs e)
         {
-            TextWriter txt = new StreamWriter(filePath);
-            txt.Write(textBox1.Text);
-            txt.Close();
+            try
+            {
+                TextWriter txt = new StreamWriter(filePathText);
+                txt.Write(textBox1.Text);
+                txt.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Filepath not found", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            
         }
         private void SimpleSave()
         {
             try
             {
-                TextWriter txt = new StreamWriter(filePath);
-                if (draws == 0)
-                    txt.Write("W-" + wins + "   " + winPerc + "%" + "\r\n" + "L-" + losses);
+                if (showPerc == true)
+                {
+                    TextWriter txt = new StreamWriter(filePath);
+                    if (draws == 0)
+                        txt.Write("W-" + wins + "   " + winPerc + "%" + "\r\n" + "L-" + losses);
+                    else
+                        txt.Write("W-" + wins + "   " + winPercWDraw + "%" + "\r\n" + "D-" + draws + "\r\n" + "L-" + losses);
+                    txt.Close();
+                }
                 else
-                    txt.Write("W-" + wins + "   " + winPercWDraw + "%" + "\r\n" + "D-" + draws + "\r\n" + "L-" + losses);
-                txt.Close();
+                {
+                    TextWriter txt = new StreamWriter(filePath);
+                    if (draws == 0)
+                        txt.Write("W-" + wins + "   " + "\r\n" + "L-" + losses);
+                    else
+                        txt.Write("W-" + wins + "   " + "\r\n" + "D-" + draws + "\r\n" + "L-" + losses);
+                    txt.Close();
+                }
             }
             catch(DirectoryNotFoundException dirEx)
             {
@@ -239,7 +269,7 @@ namespace TextfileEdit
                 winPerc = (int)(((double)wins / (wins + draws + losses)) * 100);
                 drawPerc = (int)(((double)draws / (wins + draws + losses)) * 100);
                 lossPerc = (int)(((double)losses / (wins + draws + losses)) * 100);
-                winPercWDraw = (int)(((double)losses / (wins + losses)) * 100);
+                winPercWDraw = (int)(((double)wins / (wins + losses)) * 100);
             }
             
             //return winPerc;
@@ -390,6 +420,41 @@ namespace TextfileEdit
             lossesTxt.Text = losses.ToString();
             UpdatePercentLabels();
             SimpleSave();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtFilePathTextBox_TextChanged(object sender, EventArgs e)
+        {
+            filePathText = txtFilePathTextBox.Text;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            showPerc = checkBox1.Checked;
+            Properties.Settings.Default.ShowPercent = showPerc;
+            Properties.Settings.Default.Save();
+        }
+
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void changeDefaultFileBoxToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFD = new OpenFileDialog();
+
+            if (openFD.ShowDialog() == DialogResult.OK)
+            {
+                filePathText = openFD.FileName;
+                txtFilePathTextBox.Text = openFD.FileName;
+                Properties.Settings.Default.DefaultFilePathText = openFD.FileName;
+                Properties.Settings.Default.Save();
+            }
         }
     }
 }
